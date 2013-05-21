@@ -1,0 +1,24 @@
+<div id="posts">
+	<% if recent_posts(@user.id).any? %>
+		<h4>
+			<% if recent_posts(@user.id).count < 5 %>
+				<% if recent_posts(@user.id).count == 1 %>
+					The only post
+				<% else %>
+					<%= recent_posts(@user.id).count %> most recent posts
+				<% end %>
+			<% else %>
+				5 most recent posts
+			<% end %>
+		</h4>
+
+		<% recent_posts(@user.id).each do |post| %>
+			<div>
+				<h5><%= link_to post.title, post_path(post) %></h6>
+				<p><%= post.content %></p>
+			</div>
+		<% end %>
+	<% else %>
+		<h4>No recent posts :(</h4>
+	<% end %>
+</div>
