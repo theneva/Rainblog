@@ -1,0 +1,31 @@
+<% if @posts.any? %>
+	<% @posts.each do |post| %>
+		<div class="post">
+
+			<h4 style="display: inline;">
+				<%= link_to post.title, post_path(post) %>
+			</h4>
+			<% unless post.published? %>
+				<span style="font-size: 0.9em; font-style: italic; font-color: orange;">(not published)</span>
+			<% end %>
+
+			<p>
+				<%= post.content %>
+			</p>
+			
+			<span style="font-color: grey; font-style: italic; font-size: 0.8em;">
+				Created at <%= post.created_at %> by <%= link_to get_username_by_id(post.user_id), user_path(post.user_id) %>
+			</span>
+
+			<br />
+			
+			<% if current_user && post.user_id == current_user.id %>
+				<%= link_to 'Edit', edit_post_path(post) %> <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+			<% end %>
+
+			<hr />
+		</div>
+	<% end %>
+<% else %>
+	<h4>No posts :(</h4>
+<% end %>

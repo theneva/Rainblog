@@ -6,6 +6,9 @@ Rainblog::Application.routes.draw do
   root to: 'welcome#index'
 
   resources :posts
-  resources :users, except: :index
+  resources :users, except: :index do
+  	get 'blog',	on: :member
+  end
+
   resources :sessions
 end

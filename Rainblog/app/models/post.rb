@@ -2,8 +2,10 @@ class Post < ActiveRecord::Base
 	belongs_to :user
   	attr_accessible :content, :published, :title
 
-  	# TODO separate between published and private posts
+	validates_presence_of :title
+	validates_presence_of :content
 
-  	# Shouldn't hard code 5 here, but it has to go _somewhere_
-  	scope :recent, lambda { |user_id| where('user_id = ?', user_id).order('created_at DESC').limit(5) }
+  	scope :available, lambda { |current_user_id| where('published = ? OR user_id = ?', true, current_user_id).order 'created_at DESC' }
+	scope :available_by_user, lambda { |user_id, current_user_id| available(current_user_id).where('user_id = ?', user_id) }
+	scope :recent_by_user, lambda { |user_id, current_user_id, limit| available_by_user(user_id, current_user_id).limit limit }
 end

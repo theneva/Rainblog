@@ -1,6 +1,10 @@
-<h1>Editing user</h1>
+<% if current_user == @user %>
+	<h1>Editing user</h1>
 
-<%= render 'form' %>
+	<%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+	<%= link_to 'Show', @user %> |
+	<%= link_to 'Back', users_path %>
+<% else %>
+	<h1>You have to be logged in to that profile if you want to do that<br />I should really do this with before_filter in the controller</h1>
+<% end %>

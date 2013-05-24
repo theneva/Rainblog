@@ -20,8 +20,7 @@
     <%= f.text_area :content %>
   </div>
   <div class="field">
-    <%= f.label :published %><br />
-    <%= f.check_box :published %>
+    <%= f.check_box :published %> <%= f.label :published, style: 'display: inline;' %>
   </div>
   <div class="actions">
     <%= f.submit %>

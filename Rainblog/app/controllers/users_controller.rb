@@ -1,16 +1,25 @@
 class UsersController < ApplicationController
 
+#  before_filter(only: [:edit, :create, :update, :destroy]) do |c|
+#    c.own_profile_required(params[:id], current_user)
+#  end
+
+#  def own_profile_required(user_id, current_user)
+#    redirect_to root_url, notice: '' << user_id << ' ' << current_user.id << 'You have to be logged in to that profile in order to do that.' unless current_user && current_user.id == user_id
+#  end
+
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.find params[:id]
+    @posts = Post.recent_by_user @user.id, current_user ? current_user.id : -1, 5
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
     end
   end
-
+  
   # GET /users/new
   # GET /users/new.json
   def new
@@ -70,6 +79,17 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to root_path }
       format.json { head :no_content }
+    end
+  end
+
+  def blog
+    @user = User.find(params[:id])
+    @posts = Post.available_by_user @user.id, current_user ? current_user.id : -1
+
+    respond_to do |format|
+      format.html # favorites.html.erb
+      format.json { render json: @movies }
+      format.xml  { render xml:  @movies }
     end
   end
 end

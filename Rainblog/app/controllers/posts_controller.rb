@@ -1,8 +1,12 @@
 class PostsController < ApplicationController
+
+   before_filter :login_required, only: [:new, :create]
+#  before_filter :own_profile_required, only: [:edit, :update, :destroy]
+
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.available current_user ? current_user.id : -1
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,6 +45,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
+    @post.user_id = current_user.id
 
     respond_to do |format|
       if @post.save
