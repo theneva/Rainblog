@@ -5,7 +5,7 @@
 			<h4 style="display: inline;">
 				<%= link_to post.title, post_path(post) %>
 			</h4>
-			<% unless post.published? %>
+			<% unless post.published %>
 				<span style="font-size: 0.9em; font-style: italic; font-color: orange;">(not published)</span>
 			<% end %>
 
@@ -14,7 +14,11 @@
 			</p>
 			
 			<span style="font-color: grey; font-style: italic; font-size: 0.8em;">
-				Created at <%= post.created_at %> by <%= link_to get_username_by_id(post.user_id), user_path(post.user_id) %>
+				<% if post.published %>
+					First published at <%= post.published_at %> by <%= link_to @user.username, user_path(@user) %>
+				<% else %>
+					Not published
+				<% end %>
 			</span>
 
 			<br />
@@ -23,7 +27,9 @@
 				<%= link_to 'Edit', edit_post_path(post) %> <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %>
 			<% end %>
 
-			<hr />
+			<br />
+			<br />
+			<br />
 		</div>
 	<% end %>
 <% else %>

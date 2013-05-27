@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  RECENT_LIMIT = 5
+
 #  before_filter(only: [:edit, :create, :update, :destroy]) do |c|
 #    c.own_profile_required(params[:id], current_user)
 #  end
@@ -12,7 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find params[:id]
-    @posts = Post.recent_by_user @user.id, current_user ? current_user.id : -1, 5
+    @posts = Post.available_by_user(@user.id, current_user.nil? ? -1 : current_user.id).limit(RECENT_LIMIT)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -43,6 +45,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        
+        # Sign the user in on registering
+        session[:user_id] = @user.id
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -82,14 +88,15 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/1/blog
+  # GET /users/1/blog.json
   def blog
     @user = User.find(params[:id])
-    @posts = Post.available_by_user @user.id, current_user ? current_user.id : -1
+    @posts = Post.available_by_user(@user.id, current_user.nil? ? -1 : current_user.id).limit(RECENT_LIMIT)
 
     respond_to do |format|
       format.html # favorites.html.erb
-      format.json { render json: @movies }
-      format.xml  { render xml:  @movies }
+      format.json { head :no_content }
     end
   end
 end

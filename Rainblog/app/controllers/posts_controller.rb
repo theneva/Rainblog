@@ -6,8 +6,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.available current_user ? current_user.id : -1
-
+    @user = current_user
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
@@ -46,6 +46,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(params[:post])
     @post.user_id = current_user.id
+    @post.published_at = Time.now if @post.published
 
     respond_to do |format|
       if @post.save
@@ -62,6 +63,7 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.find(params[:id])
+    if params[:post][:published] then @post.published_at = Time.now end
 
     respond_to do |format|
       if @post.update_attributes(params[:post])

@@ -1,0 +1,2 @@
+module BrohoovesHelper
+end

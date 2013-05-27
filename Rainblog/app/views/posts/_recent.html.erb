@@ -1,14 +1,6 @@
 <div id="posts">
 	<h4>
-		<% if @posts.count.between?(1, 5) %>
-			<% if @posts.count == 1 %>
-				The only post
-			<% else %>
-				<%= @posts.count %> most recent posts
-			<% end %>
-		<% else %>
-			5 most recent posts
-		<% end %>
+		&lt;= 5 newest posts
 	</h4>
 
 	<%= render "posts/list" %>

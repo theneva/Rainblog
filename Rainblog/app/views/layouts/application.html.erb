@@ -32,11 +32,8 @@
           <%= link_to 'Sonic Rainblog', root_path, :class => "brand" %>
           <div class="nav-collapse collapse">
             
-            <ul class="nav">
-
-              <li><%= link_to '100 newest posts', posts_path %></li>
-
               <% if current_user %>
+                <ul class="nav">
                   <li><%= link_to 'My blog', posts_path %></li>
                   <li><%= link_to 'My profile', user_path(current_user) %></li>
                   <li><%= link_to 'New post', new_post_path %></li>
@@ -49,13 +46,11 @@
               
               <!-- Logged in; display message and logout link -->
               <% if current_user %>
-
-                <p style="color: orange; margin-top: 11px;">
-                    Hello, <%= current_user.username %>!
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <%= link_to 'Log out', log_out_path, style: 'color: aqua;' %>
-                </p>
-                
+                <div style="display: inline; position: relative; top: 10px;">
+                  <%= link_to 'Hello, ' << current_user.username << '!', user_path(current_user.id), style: 'color: orange; margin-top: 11px;' %>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <%= link_to 'Log out', log_out_path, style: 'color: aqua;' %>
+                </div>
               <!-- Not logged in; display login and register links -->
               <% else %>
 
