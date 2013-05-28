@@ -1,21 +1,25 @@
 <% if @post.published || (current_user && @post.user_id == current_user.id) %>
-	<p>
 	  <h2><%= @post.title %></h2>
 
 	<p><%= @post.content %></p>
 
+	<%= '(not published)' unless @post.published %>
+
 	<p>
-	  <b>Published?</b>
-	  <%= @post.published %>
+		<b>By <%= link_to @post.author.username, @post.author %></b>
 	</p>
 
-	<% if current_user && current_user.id = @post.user_id %>
+	<% if current_user && current_user.id == @post.user_id %>
 		<%= link_to 'Edit', edit_post_path(@post) %> | <%= link_to 'Delete', post_path(@post), confirm: "Are you sure you want to delete this post?", method: :delete %>
 	<% end %>
 
+	<p>
+		<%= render 'brohooves/brohoof_content' %>
+	</p>
+
 	<hr />
 
-	<h2>Comments</h2>
+	<h3>Comments</h3>
 	<% if @post.comments.any? %>
 		<%= render @post.comments %>
 	<% else %>

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   	# Method that makes sure the user is logged in for use by the controllers
   	def login_required
-  		redirect_to(root_url, notice: 'You have to be signed in to do that!') unless current_user
+  		redirect_to(root_url, notice: 'You have to be signed in to do that! Top right ~') unless current_user
   	end
 
   	#def own_profile_required user_id

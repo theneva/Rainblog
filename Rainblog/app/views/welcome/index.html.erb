@@ -2,6 +2,10 @@
 	<h1>Welcome to Sonic Rainblog!</h1>
 	<hr />
 	<p style="text-align: justify">This blog site features Rainblogs. You get one (and only one) Rainblog, and may use it for promoting chinchilla warfare, expressing your love for cucumbers, or letting the rest of the world know why no one ever listens to you by actually blogging.</p>
-	<p style="color: red;">Fluttershy always leads the way to getting your own Rainblog.</p>
+	<p style="color: red;">Fluttershy <em>always</em> leads the way to getting your own Rainblog.</p>
 	<p><%= link_to image_tag("fluttershy_yay.png", :alt => "<Fluttershy yay>", :class => "fluttershy"), new_user_path %></p>
+
+	<hr />
+
+	<%= render "search" %>
 </div>

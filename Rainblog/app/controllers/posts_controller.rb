@@ -44,8 +44,8 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(params[:post])
-    @post.user_id = current_user.id
+
+    @post = current_user.posts.new(params[:post])
     @post.published_at = Time.now if @post.published
 
     respond_to do |format|

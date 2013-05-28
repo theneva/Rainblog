@@ -1,7 +1,10 @@
 <div class="comment">
 	<p><%= comment.content %></p>
+
+	<%= link_to 'Delete comment', comment_path(comment), method: :delete, confirm: "Are you sure?" if current_user and (current_user == comment.author or current_user == @post.author) %>
+
 	<span style="font-color: gray; font-style: italic;">Written by 
-		<%= comment.author_name %>
+		<%= link_to comment.author.username, comment.author %>
 		at 
 		<%= comment.created_at %>
 	</span>

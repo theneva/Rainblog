@@ -17,10 +17,10 @@ class User < ActiveRecord::Base
 
 	# Order is key here; destroying the posts before finding comments and brohooves => disaster
 	
-	# When the user's posts are commented on; these comments must be destroyed
+	# When the user's posts are commented on; these comments must be destroyed (for destroying)
 	has_many :comments, through: :posts, dependent: :destroy
 
-	# When the user's post is brohoofed
+	# When the user's post is brohoofed (for destroying)
 	has_many :brohooves, through: :posts, dependent: :destroy
 
 	# The user's posts
@@ -28,4 +28,22 @@ class User < ActiveRecord::Base
 	
 	# When the user comments on posts
 	has_many :comments, dependent: :destroy
+
+	# When the user brohoofs posts
+	has_many :brohooves, dependent: :destroy
+
+	# Convenience methods
+	def get_brohoof_array_by_post post
+		self.brohooves.map(&:id) & post.brohooves.map(&:id)
+	end
+
+	# Only to be used when we're absolutely sure the post has a brohoof
+	def get_id_of_brohoof_in_post post
+		get_brohoof_array_by_post(post).first
+	end
+
+	# Hax :D
+	def has_brohoofed_post post
+		get_brohoof_array_by_post(post).any?
+	end
 end

@@ -1,0 +1,5 @@
+<h4>Search for users here!</h4>
+<%= form_tag search_path do %>
+	<%= text_field_tag :query, nil, placeholder: 'Query' %><br />
+	<%= submit_tag 'Search' %>
+<% end %>

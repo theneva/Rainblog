@@ -99,4 +99,9 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search
+    q = "%#{params[:query]}%" unless params[:query] == ""
+    @users = User.where('username like ?', q)
+  end
 end

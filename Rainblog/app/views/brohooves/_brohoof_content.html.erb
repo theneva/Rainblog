@@ -1,0 +1,11 @@
+<%= pluralize @post.brohooves.count, 'pony' %> brohoof'd this.
+
+<% if current_user && current_user != @post.author %>
+	<% unless current_user.has_brohoofed_post @post %>
+		<%= form_for([@post, @post.brohooves.build]) do |f| %>
+			<%= f.submit 'Brohoof' %>
+		<% end %>
+	<% else %>
+		<%= link_to 'Unbrohoof', brohoof_path(current_user.get_id_of_brohoof_in_post(@post)), method: :delete %>
+	<% end %>
+<% end %>

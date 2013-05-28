@@ -3,16 +3,17 @@ class BrohoovesController < ApplicationController
   # POST /brohooves
   # POST /brohooves.json
   def create
-    @brohoof = Brohoof.new(params[:brohoof])
+
+    @post = Post.find(params[:post_id])
+
+    # Minor hack in order to get the user id assigned properly
+    @brohoof = @post.brohooves.new(params[:brohoof])
+    @brohoof.user_id = current_user.id
 
     respond_to do |format|
-      if @brohoof.save
-        format.html { redirect_to @brohoof, notice: 'Brohoof was successfully created.' }
-        format.json { render json: @brohoof, status: :created, location: @brohoof }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @brohoof.errors, status: :unprocessable_entity }
-      end
+      @brohoof.save
+      format.html { redirect_to :back }
+      format.json { render json: @brohoof, status: :created }
     end
   end
 
@@ -23,7 +24,7 @@ class BrohoovesController < ApplicationController
     @brohoof.destroy
 
     respond_to do |format|
-      format.html { redirect_to brohooves_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end
