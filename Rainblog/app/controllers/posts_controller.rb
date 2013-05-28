@@ -1,12 +1,13 @@
 class PostsController < ApplicationController
 
-   before_filter :login_required, only: [:new, :create]
+   before_filter :login_required, only: [:index, :new, :create]
 #  before_filter :own_profile_required, only: [:edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
     @user = current_user
+    @posts = @user.posts.order('published_at DESC')
     
     respond_to do |format|
       format.html # index.html.erb

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  # The number of posts to display as "Recent"
   RECENT_LIMIT = 5
 
 #  before_filter(only: [:edit, :create, :update, :destroy]) do |c|

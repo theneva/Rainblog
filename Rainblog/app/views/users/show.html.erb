@@ -19,6 +19,11 @@
 	<%= link_to 'Edit information', edit_user_path(@user), class: 'btn' %> <%= link_to 'Delete profile', user_path(@user), confirm: "Are you sure you want to delete your profile? There's no going back!", method: :delete, class: 'btn btn-danger' %>
 <% end %>
 
+<br />
+<br />
+
+<%= link_to 'Go to blog', blog_user_path(@user) %>
+
 
 <br />
 <hr />

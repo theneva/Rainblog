@@ -1,4 +1,4 @@
-<% if @post.published || (current_user && @post.user_id == current_user.id) %>
+<% if @post.published or (current_user and @post.user_id == current_user.id) %>
 	  <h2><%= @post.title %></h2>
 
 	<p><%= @post.content %></p>
