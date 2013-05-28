@@ -1,8 +1,9 @@
 class SessionsController < ApplicationController
-
+	
 	def new
 	end
 
+	# Sign in
 	def create
 
 		# Let's ignore case in username, shall we?
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
 		end
 	end
 
+	# Log out
 	def destroy
 		session[:user_id] = nil
 		redirect_to :back

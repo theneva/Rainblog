@@ -3,14 +3,6 @@ class UsersController < ApplicationController
   # The number of posts to display as "Recent"
   RECENT_LIMIT = 5
 
-#  before_filter(only: [:edit, :create, :update, :destroy]) do |c|
-#    c.own_profile_required(params[:id], current_user)
-#  end
-
-#  def own_profile_required(user_id, current_user)
-#    redirect_to root_url, notice: '' << user_id << ' ' << current_user.id << 'You have to be logged in to that profile in order to do that.' unless current_user && current_user.id == user_id
-#  end
-
   # GET /users/1
   # GET /users/1.json
   def show
@@ -91,6 +83,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/blog
   # GET /users/1/blog.json
+  # The user's blog. Accessed as defined in routes.
   def blog
     @user = User.find(params[:id])
     @posts = Post.available_by_user(@user.id, current_user.nil? ? -1 : current_user.id).limit(RECENT_LIMIT)
@@ -101,6 +94,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # Search results. Returns any username containing the query
   def search
     q = "%#{params[:query]}%" unless params[:query] == ""
     @users = User.where('username like ?', q)

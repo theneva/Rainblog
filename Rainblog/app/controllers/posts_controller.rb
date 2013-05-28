@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
 
-   before_filter :login_required, only: [:index, :new, :create]
-#  before_filter :own_profile_required, only: [:edit, :update, :destroy]
+  # Make sure a user who is not signed in cannot visit "their own blog" or create posts.
+  before_filter :login_required, only: [:index, :new, :create]
 
   # GET /posts
   # GET /posts.json
+  # The user's personal blog.
   def index
     @user = current_user
     @posts = @user.posts.order('published_at DESC')
