@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 				format.html { redirect_to :back }
      			format.json { render json: @comment, status: :created }
 			else
-		        format.html { redirect_to @post, { alert: "The comment field can't be blank" } } # TODO superhacks to give feedback -- should use the errors hash, but how the hell does one even do that
+		        format.html { redirect_to @post, { alert: "The comment field can't be blank" } }
 		        format.json { render json: @comment.errors, status: :unprocessable_entity }
 	      	end
       	end

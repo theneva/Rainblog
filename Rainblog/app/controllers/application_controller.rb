@@ -9,9 +9,8 @@ class ApplicationController < ActionController::Base
   	end
 
 private
-
+    # The user currently signed in
   	def current_user
-        # TODO
         @current_user || User.find(session[:user_id]) if session[:user_id]
   	end
 end
